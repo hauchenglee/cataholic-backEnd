@@ -36,6 +36,7 @@ public class UserBean implements Serializable {
 
     @NotBlank(message = "email empty")
 //    @Email(message = "email pattern error")
+    @Column(unique = true)
     private String userEmail;
 
     @NotBlank(message = "password empty")
