@@ -35,11 +35,11 @@ public class UserBean implements Serializable {
     private String userName;
 
     @NotBlank(message = "email empty")
-    @Email(message = "email pattern error")
+//    @Email(message = "email pattern error")
     private String userEmail;
 
     @NotBlank(message = "password empty")
-//    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "password pattern error")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "password pattern error")
     private String userPassword;
 
     @Column(updatable = false, nullable = false)
