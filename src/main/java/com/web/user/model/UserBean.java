@@ -26,21 +26,19 @@ public class UserBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // 此處使用auto自動新增 -> “违反主键/唯一约束条件”，原因不明
-    // DataIntegrityViolationException
-    private Integer userUUID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 此處使用auto自動新增 -> “违反主键/唯一约束条件”，原因不明
+    private Long userUUID;
 
 //    @NotBlank(message = "name empty")
     private String userName;
 
     @NotBlank(message = "email empty")
-//    @Email(message = "email pattern error")
+    @Email(message = "email pattern error")
     @Column(unique = true)
     private String userEmail;
 
     @NotBlank(message = "password empty")
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "password pattern error")
+//    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "password pattern error")
     private String userPassword;
 
     @Column(updatable = false, nullable = false)

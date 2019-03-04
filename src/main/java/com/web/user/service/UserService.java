@@ -2,29 +2,20 @@ package com.web.user.service;
 
 import com.web.user.model.UserBean;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface UserService {
 
-    /**
-     * register user
-     * @param userBean
-     * @return msg if successful or null
-     */
     UserBean saveUser(UserBean userBean);
 
-    UserBean findByUserEmail(String userId);
+    Optional<UserBean> getUser(Long userUUID);
 
-    /**
-     * check id and password when login
-     * @param userId
-     * @param userPassword
-     * @return msg if successful or null
-     */
+    List<UserBean> getUserList();
+
+    void deleteUser(UserBean userBean);
+
+    UserBean updateUser(Long userUUID, UserBean userBean);
+
     UserBean checkLogin(String userId, String userPassword);
-
-    /**
-     * update sending mail result
-     * @param exception
-     * @return Invalid Addresses or null
-     */
-    int updateUserMailException(String exception);
 }
