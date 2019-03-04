@@ -20,7 +20,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 @Validated
 public class UserController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -36,17 +36,6 @@ public class UserController {
         this.mailService = mailService;
     }
 
-    @PostMapping(value = "/users")
-    @ResponseStatus(HttpStatus.OK)
-    public Object saveUser(@Valid UserBean userBean) {
-        userBean.setUserMailChecked(0);
-        userBean.setUserAuthorization(1);
-        String code = CodeUtil.generateUniqueCode();
-        mailService.generateMail1(userBean, code);
-        mailService.doMailSendUtil(userBean);
-        return userService.saveUser(userBean);
-    }
-
     @GetMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Object getUser(@PathVariable("id") Long userUUID) throws NotFoundException {
@@ -59,24 +48,56 @@ public class UserController {
         return userService.getUserList();
     }
 
+    @PostMapping(value = "/users")
+    @ResponseStatus(HttpStatus.OK)
+    public Object saveUser(@Valid UserBean userBean) {
+        userBean.setUserMailChecked(0);
+        userBean.setUserAuthorization(1);
+        String code = CodeUtil.generateUniqueCode();
+        mailService.generateMail1(userBean, code);
+        mailService.doMailSendUtil(userBean);
+        return userService.saveUser(userBean);
+    }
+
     @PatchMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public UserBean updateUser(@PathVariable("id") Long userUUID, UserBean userBean) {
         return userService.updateUser(userUUID, userBean);
     }
 
-    @RequestMapping("/register")
-    public RestResult register(@Valid UserBean userBean) {
-        return generator.getSuccessResult("register",userService.saveUser(userBean));
+    @DeleteMapping(value = "")
+    @ResponseStatus
+    public Object deleteUser() {
+        return null;
     }
 
-    @RequestMapping(value = "/login")
-    public Object login(@NotEmpty(message = "Email cannot empty") String userEmail, @NotEmpty(message = "Password cannot empty") String password, HttpSession session) {
+
+    @GetMapping(value = "/session")
+    @ResponseStatus
+    public Object getSession() {
+        return null;
+    }
+
+    @PostMapping(value = "/session")
+    @ResponseStatus
+    public Object postSession(@NotEmpty(message = "Email cannot empty") String userEmail, @NotEmpty(message = "Password cannot empty") String password, HttpSession session) {
         UserBean userBean = userService.checkLogin(userEmail, password);
         if (userBean != null) {
             session.setAttribute("login", userBean);
             return generator.getSuccessResult("Login Success", userBean);
         }
         return generator.getFailResult("Login Error");
+    }
+
+    @PutMapping(value = "/session")
+    @ResponseStatus
+    public Object putSession() {
+        return null;
+    }
+
+    @DeleteMapping(value = "/session")
+    @ResponseStatus
+    public Object deleteSession() {
+        return null;
     }
 }
