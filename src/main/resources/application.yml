@@ -1,0 +1,49 @@
+## set server port
+#server:
+#  port: 8888  # 配置端口
+#  servlet:
+#    context-path: / # 项目启动地址为 localhost:8888/
+#
+#spring:
+#  datasource: # set database config
+#    url: jdbc:mysql:///jspdb?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Taipei
+#    username: root
+#    password: mysql
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa: # set jpa
+#    database: MYSQL # specify ths DBMS
+#    show-sql: true # show or not log for each sql query
+#    hibernate:
+#      ddl-auto: update # Hibernate ddl auto(create, create-drop, update)
+#      naming: # naming strategy
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+#    properties:
+#      hibernate: # stripped before adding them to entity manager
+#        dialect: org.hibernate.dialect.MySQL57Dialect
+#  aop: #设置aop,aop依赖添加后默认是启用的
+#    proxy-target-class: true
+#
+#  # Thymeleaf view template config
+#  # disable cache for dev
+#  # 配置和此项目无关，主要为设置thymeleaf 不严格检查HTML5
+#  thymeleaf:
+#    cache: false
+#    encoding: UTF-8
+#    # 设置LEGACYHTML5 并添加依赖 可以使thymeleaf不严格模式
+#    mode: LEGACYHTML5
+#
+##  mvc:
+##    view: # 默认前后缀
+##      prefix: /
+##      suffix: .html
+##    static-path-pattern: /**
+##logging: #相对位置，根目录
+##  path: var/log
+## 日志级别 TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+##logging: # 配置日志文件的配置方式  logback-spring.* 也为spring的默认命名规则
+##  config: logback-spring.xml
+#
+#
+#
+#
