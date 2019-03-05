@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserBean> getUser(Long userUUID) {
-        return userDao.findById(userUUID);
+    public UserBean getUser(Long userUUID) {
+        return userDao.findByUserUUID(userUUID);
     }
 
     @Override
@@ -32,13 +32,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UserBean userBean) {
-        userDao.delete(userBean);
+    public void deleteUser(Long userUUID) {
+        userDao.deleteById(userUUID);
     }
 
     @Override
     public UserBean updateUser(Long userUUID, UserBean userBean) {
-        return userDao.updateUser();
+        UserBean currentInstance = userDao.findByUserUUID(userUUID);
+        String[] nullPropertyNames = getNullPropertyNames(userBean);
+        BeanUtils.copyProperties(userBean, currentInstance, nullPropertyNames);
+        return userDao.save(currentInstance);
     }
 
     @Override

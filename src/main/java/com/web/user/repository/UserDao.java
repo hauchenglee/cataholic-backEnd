@@ -2,14 +2,10 @@ package com.web.user.repository;
 
 import com.web.user.model.UserBean;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
 public interface UserDao extends JpaRepository<UserBean, Long> {
 
-    UserBean findByUserEmailAndUserPassword(String userEmail, String userPassword);
+    UserBean findByUserUUID(Long userUUID);
 
-    @Modifying
-    @Query
-    UserBean updateUser();
+    UserBean findByUserEmailAndUserPassword(String userEmail, String userPassword);
 }

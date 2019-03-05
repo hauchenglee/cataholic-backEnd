@@ -50,54 +50,24 @@ public class UserController {
 
     @PostMapping(value = "/users")
     @ResponseStatus(HttpStatus.OK)
-    public Object saveUser(@Valid UserBean userBean) {
+    public void saveUser(@Valid UserBean userBean) {
         userBean.setUserMailChecked(0);
         userBean.setUserAuthorization(1);
         String code = CodeUtil.generateUniqueCode();
         mailService.generateMail1(userBean, code);
         mailService.doMailSendUtil(userBean);
-        return userService.saveUser(userBean);
+        userService.saveUser(userBean);
     }
 
-    @PatchMapping(value = "/users/{id}")
+    @PutMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserBean updateUser(@PathVariable("id") Long userUUID, UserBean userBean) {
-        return userService.updateUser(userUUID, userBean);
+    public void updateUser(@PathVariable("id") Long userUUID, UserBean userBean) {
+        userService.updateUser(userUUID, userBean);
     }
 
-    @DeleteMapping(value = "")
-    @ResponseStatus
-    public Object deleteUser() {
-        return null;
-    }
-
-
-    @GetMapping(value = "/session")
-    @ResponseStatus
-    public Object getSession() {
-        return null;
-    }
-
-    @PostMapping(value = "/session")
-    @ResponseStatus
-    public Object postSession(@NotEmpty(message = "Email cannot empty") String userEmail, @NotEmpty(message = "Password cannot empty") String password, HttpSession session) {
-        UserBean userBean = userService.checkLogin(userEmail, password);
-        if (userBean != null) {
-            session.setAttribute("login", userBean);
-            return generator.getSuccessResult("Login Success", userBean);
-        }
-        return generator.getFailResult("Login Error");
-    }
-
-    @PutMapping(value = "/session")
-    @ResponseStatus
-    public Object putSession() {
-        return null;
-    }
-
-    @DeleteMapping(value = "/session")
-    @ResponseStatus
-    public Object deleteSession() {
-        return null;
+    @DeleteMapping(value = "/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable("id") Long userUUID) {
+        userService.deleteUser(userUUID);
     }
 }
