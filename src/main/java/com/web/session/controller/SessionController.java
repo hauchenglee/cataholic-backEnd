@@ -6,10 +6,12 @@ import com.web.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotEmpty;
 
@@ -30,7 +32,7 @@ public class SessionController {
 
     @GetMapping(value = "/session")
     @ResponseStatus(HttpStatus.OK)
-    public Object getSession() {
+    public Object getSession(HttpSession session) {
         return null;
     }
 
@@ -46,12 +48,12 @@ public class SessionController {
 
     @PutMapping(value = "/session")
     @ResponseStatus(HttpStatus.OK)
-    public void putSession() {
+    public void putSession(HttpSession session) {
     }
 
-    @DeleteMapping(value = "/session/{id}")
+    @DeleteMapping(value = "/session")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSession(@PathVariable("id") HttpSession session) {
+    public void deleteSession(HttpSession session) {
         sessionService.deleteSession(session);
     }
 }
